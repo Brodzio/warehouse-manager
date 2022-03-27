@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:include="layout :: head"></head>
+<body>
+<div class="container-fluid text-center">
+    <div th:include="layout :: navigationPanel"></div>
+    <p>
+    <h1>Zarządzanie pracownikami</h1>
+    </p>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+            <!-- Toggle button -->
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarRightAlignExample"
+                    aria-controls="navbarRightAlignExample"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse" id="navbarRightAlignExample">
+                <!-- Left links -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <form th:action="@{/employee/add}" method="get">
+                            <button type="submit" class="btn btn-success">Dodaj pracownika</button>
+                        </form>
+                    </li>
+                </ul>
+                <!-- Left links -->
+            </div>
+            <!-- Collapsible wrapper -->
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <div>
+        <table class="table table-striped table-primary">
+
+            <thead class="ttop">
+            <tr class="table-info">
+                <td width="20px"><b> ID</b></td>
+                <td><b>Login</b> </td>
+                <td><b>Hasło</b> </td>
+                <td><b>Imię</b> </td>
+                <td><b>Nazwisko</b> </td>
+                <td><b>E-mail</b> </td>
+                <td><b>Stanowisko</b></td>
+                <td><b>Numer telefonu</b></td>
+                <td><b></b></td>
+                <td><b></b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee, iStat : ${employeeList}" th:style="${iStat.odd}? 'font-weight: normal;'">
+
+                <td width="20px" th:text="${employee.id}">
+                </td><td th:text="${employee.login}">
+            </td><td th:text="${employee.password}">
+            </td><td th:text="${employee.name}">
+            </td><td th:text="${employee.surname}">
+            </td><td th:text="${employee.email}">
+            </td><td th:text="${employee.jobTitle}">
+            </td><td th:text="${employee.phoneNumber}">
+            </td><td>
+                <form th:action="@{/employee/update}" th:object="${employeeToEdit}" method="post">
+                    <input type="hidden" name="id" th:value="${employee.id}">
+                    <input type="hidden" name="login" th:value="${employee.login}">
+                    <input type="hidden" name="password" th:value="${employee.password}">
+                    <input type="hidden" name="name" th:value="${employee.name}">
+                    <input type="hidden" name="surname" th:value="${employee.surname}">
+                    <input type="hidden" name="email" th:value="${employee.email}">
+                    <input type="hidden" name="jobTitle" th:value="${employee.jobTitle}">
+                    <input type="hidden" name="phoneNumber" th:value="${employee.phoneNumber}">
+                    <button type="submit" class="btn btn-primary">Uaktualnij</button>
+                </form>
+            </td>
+                <td>
+                    <form th:action="@{'/employee/delete/' + ${employee.id}}" method="post">
+                        <button type="submit" class="btn btn-danger">Usuń</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:include="layout :: footer"></div>
+</div>
+</body>
+</html>

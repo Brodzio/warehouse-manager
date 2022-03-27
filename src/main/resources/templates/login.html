@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:include="layout :: head">
+</head>
+<body>
+<div class="container text-center">
+    <div th:include="layout :: navigationPanel"></div>
+    <div>
+        <h1>Witaj w programie Zarządca</h1>
+    </div>
+    <div>
+        <h4><small class="text-muted">Jestem aplikacją do zarządzania magazynem, zaloguj się i zaczynajmy pracę!</small></h4>
+    </div>
+    <div th:if="${param.error}"> Błędny login lub hasło. </div>
+    <div th:if="${param.logout}"> Użytkownik wylogowany. </div>
+    <p>
+    <form th:action="@{/login}" method="post"
+          style="max-width: 600px; margin: 0 auto;"
+          th:object="${user}"
+    >
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-form-label col-4">Login</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" th:field="*{login}" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-4">Hasło</label>
+                <div class="col-8">
+                    <input type="password" class="form-control" th:field="*{password}" required />
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Zaloguj</button>
+            </div>
+        </div>
+    </form>
+    </p>
+</div>
+<div th:include="layout :: footer"></div>
+</body>
+</html>
